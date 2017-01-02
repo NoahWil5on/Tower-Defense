@@ -15,6 +15,7 @@ public abstract class Vehicle : MonoBehaviour {
 	protected Vector3 velocity;
 
 	public int health;
+	public int damage;
 	public float maxSpeed;
 
 	public int Health{ get { return health; } set { health = value; } }
@@ -51,7 +52,7 @@ public abstract class Vehicle : MonoBehaviour {
 	protected void CheckNext(){
 		if (DistSqr(position, current.transform.position) < distanceDetect * distanceDetect) {
 			if (current_num == nodeManager.nodes.Count - 1) {
-				scoreManager.GetComponent<ScoreManager>().Health --;
+				scoreManager.GetComponent<ScoreManager>().Health -= damage;
 				GameObject.Find("EnemySpawner").GetComponent<EnemySpawn>().Killed++;
 				Destroy(gameObject);
 				return;
