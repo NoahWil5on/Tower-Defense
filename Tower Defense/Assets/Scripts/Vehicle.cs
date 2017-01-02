@@ -35,6 +35,7 @@ public abstract class Vehicle : MonoBehaviour {
 	// Update is called once per frame
 	protected void Update () {
 		if (health < 1) {
+			GameObject.Find("EnemySpawner").GetComponent<EnemySpawn>().Killed++;
 			Destroy(gameObject);
 		}
 		CheckNext ();
@@ -51,6 +52,7 @@ public abstract class Vehicle : MonoBehaviour {
 		if (DistSqr(position, current.transform.position) < distanceDetect * distanceDetect) {
 			if (current_num == nodeManager.nodes.Count - 1) {
 				scoreManager.GetComponent<ScoreManager>().Health --;
+				GameObject.Find("EnemySpawner").GetComponent<EnemySpawn>().Killed++;
 				Destroy(gameObject);
 				return;
 			}
