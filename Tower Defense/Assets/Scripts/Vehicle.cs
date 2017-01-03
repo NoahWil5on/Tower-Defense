@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public abstract class Vehicle : MonoBehaviour {
 
 	GameObject scoreManager;
+	GameObject pointsManager;
 	protected GameObject current;
 	protected int current_num;
 	NodeManager nodeManager;
@@ -25,7 +26,8 @@ public abstract class Vehicle : MonoBehaviour {
 
 		//Makes starting node the first in the node list
 		nodeManager = GameObject.Find ("NodeManager").GetComponent<NodeManager> ();
-		scoreManager = GameObject.Find("Score");
+		scoreManager = GameObject.Find("Lives");
+		pointsManager = GameObject.Find("Score");
 		current = nodeManager.nodes[0];
 		current_num = 0;
 
@@ -37,6 +39,7 @@ public abstract class Vehicle : MonoBehaviour {
 	protected void Update () {
 		if (health < 1) {
 			GameObject.Find("EnemySpawner").GetComponent<EnemySpawn>().Killed++;
+			pointsManager.GetComponent<PointsManager>().Score += damage;
 			Destroy(gameObject);
 		}
 		CheckNext ();

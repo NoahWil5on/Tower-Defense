@@ -10,6 +10,7 @@ public class EnemySpawn : MonoBehaviour {
 
 	private float timer;
 	private float levelTimer;
+	bool between;
 
 	int levelNum;
 	int enemyCount;
@@ -19,9 +20,11 @@ public class EnemySpawn : MonoBehaviour {
 	public int difficulty;
 
 	public int Killed{ get { return killed; } set { killed = value; } }
+	public bool Between{ get { return between; } set { between = value; } }
 
 	// Use this for initialization
 	void Start () {
+		between = true;
 		spawnRate = 1 / spawnRate;
 		levelNum = 1;
 		enemyCount = levelNum * difficulty;
@@ -32,13 +35,18 @@ public class EnemySpawn : MonoBehaviour {
 
 		if (enemyCount == killed) {
 			levelNum++;
+			between = true;
 			levelTimer = 0;
 			enemyCount = 0;
 		}
 		if (levelTimer > 3) {
 			Spawn ();
 			text.GetComponent<TextMesh> ().text = "";
-		} else {
+		} else if (between) {
+			text.GetComponent<TextMesh> ().text = "";
+			return;
+		}
+		else {
 			NewLevel();
 			text.GetComponent<TextMesh> ().text = "Level: " + levelNum.ToString ();
 		}
